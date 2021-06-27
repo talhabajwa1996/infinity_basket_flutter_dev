@@ -1,44 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/AuthWrapper.dart';
+import 'package:infinity_basket_app_dev/Screens/BottomBarUI/BottomBarUI.dart';
 import 'package:infinity_basket_app_dev/Screens/SplashScreenUI/SplashScreenUI.dart';
 import 'package:infinity_basket_app_dev/Utils/RouteConstants.dart';
 import 'package:page_transition/page_transition.dart';
+import '../Utils/Globals.dart' as globals;
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
+    final animationDuration =
+        Duration(milliseconds: globals.pageTransitionDuration);
     final args = settings.arguments;
     switch (settings.name) {
       case RouteConstants.splashScreen:
         return PageTransition(
-            child: SplashScreenUI(), type: PageTransitionType.rightToLeft);
+            child: SplashScreenUI(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
       case RouteConstants.authWrapper:
         return PageTransition(
-            child: AuthWrapper(), type: PageTransitionType.rightToLeft);
-      // case '/signin':
-      //   return PageTransition(
-      //       child: SignInScreenUI(), type: PageTransitionType.rightToLeft);
-      // case '/sign-up':
-      //   return PageTransition(
-      //       child: SignUpScreenUI(), type: PageTransitionType.rightToLeft);
-      // case '/otp':
-      //   return PageTransition(
-      //       child: OtpScreenUI(args), type: PageTransitionType.rightToLeft);
-      // case '/home':
-      //   return PageTransition(
-      //       child: PushNotificationsManager(child: BottomNavigationalBar()), type: PageTransitionType.rightToLeft);
-      // case '/forget-password':
-      //   return PageTransition(
-      //       child: ForgetPasswordUI(), type: PageTransitionType.rightToLeft);
-      // case '/create-password':
-      //   return PageTransition(
-      //       child: CreateNewPasswordUI(), type: PageTransitionType.rightToLeft);
-      // case '/notifications':
-      //   return PageTransition(
-      //       child: NotificationsUI(), type: PageTransitionType.rightToLeft);
-      // case '/order-detail':
-      //   return PageTransition(
-      //       child: PushNotificationsManager(child: OrderDetailScreenUI(args)),
-      //       type: PageTransitionType.rightToLeft);
+            child: AuthWrapper(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.bottomBarUi:
+        return PageTransition(
+            child: BottomBarUI(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
       default:
         return _errorRoute();
     }
