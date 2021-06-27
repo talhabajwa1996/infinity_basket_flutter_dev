@@ -5,7 +5,7 @@ import 'package:infinity_basket_app_dev/Models/SignInModel/SingInRequestModel.da
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Services/API/api.dart';
 import 'package:infinity_basket_app_dev/Services/API/api_response.dart';
-import 'package:infinity_basket_app_dev/Services/SharedPreferenceService/SharedPreferencesService.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusService.dart';
 import 'package:provider/provider.dart';
 
 class SignInService {
@@ -21,9 +21,10 @@ class SignInService {
       );
       var response =
           await Api.httpPostRequest("auth/login", _signInRequest.toJson());
-      SignInResponseModel _responseModel = SignInResponseModel.fromJson(response);
-      if(_responseModel.status == 200){
-        await SharedPreferencesService().setString('access-token', _responseModel.data.accessToken);
+      SignInResponseModel _responseModel =
+          SignInResponseModel.fromJson(response);
+      if (_responseModel.status == 200) {
+        AuthService().setAuthToken(_responseModel.data.accessToken, context);
       }
       Provider.of<SignInProvider>(context, listen: false).setLoading(false);
       return ApiResponse.completed(_responseModel);

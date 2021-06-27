@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinity_basket_app_dev/Providers/LocalDataProvider/LocalDataProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:provider/provider.dart';
 import 'Routes/AppNavigation.dart';
@@ -28,6 +29,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<SignInProvider>(
           create: (context) => SignInProvider(),
+        ),
+        ChangeNotifierProvider<LocalDataProvider>(
+          create: (context) => LocalDataProvider(),
         ),
       ],
       child: MaterialApp(

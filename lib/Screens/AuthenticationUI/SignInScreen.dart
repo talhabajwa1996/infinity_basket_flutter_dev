@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_basket_app_dev/Components/ProgressIndicators/AppLoader.dart';
 import 'package:infinity_basket_app_dev/Components/ProgressIndicators/GifLoader.dart';
 import 'package:infinity_basket_app_dev/Components/SnackBar/showSnackBar.dart';
 import 'package:infinity_basket_app_dev/Components/TextFields/CustomTextFormField.dart';
@@ -176,10 +175,11 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                                 _passwordController.text, context)
                             .then((signInResponse) {
                           if (signInResponse.responseData.status == 200) {
-                            AppNavigation()
-                                .pushReplacementTo(RouteConstants.bottomBarUi);
+                            // AppNavigation()
+                            //     .pushReplacementTo(RouteConstants.bottomBarUi);
                           } else {
-                            showSnackBar(signInResponse.responseData.message, context);
+                            showSnackBar(
+                                signInResponse.responseData.message, context);
                           }
                         });
                       } else {
