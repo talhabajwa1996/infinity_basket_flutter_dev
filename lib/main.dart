@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_basket_app_dev/Providers/LocalDataProvider/LocalDataProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpProvider/OtpProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:provider/provider.dart';
 import 'Routes/AppNavigation.dart';
 import 'Routes/Routes.dart';
-import 'Utils/ColorConstants.dart';
+import 'Utils/Constants/ColorConstants.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,8 +30,11 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignInProvider>(
           create: (context) => SignInProvider(),
         ),
-        ChangeNotifierProvider<LocalDataProvider>(
-          create: (context) => LocalDataProvider(),
+        ChangeNotifierProvider<SignInProvider>(
+          create: (context) => SignInProvider(),
+        ),
+        ChangeNotifierProvider<OtpProvider>(
+          create: (context) => OtpProvider(),
         ),
       ],
       child: MaterialApp(

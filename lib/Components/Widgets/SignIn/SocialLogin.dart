@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 import 'package:provider/provider.dart';
 
 class SocialLoginIcons extends StatelessWidget {

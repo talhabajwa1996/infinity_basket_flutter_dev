@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/AuthWrapper.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/OtpScreen.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/SingUpScreen.dart';
 import 'package:infinity_basket_app_dev/Screens/BottomBarUI/BottomBarUI.dart';
 import 'package:infinity_basket_app_dev/Screens/SplashScreenUI/SplashScreenUI.dart';
-import 'package:infinity_basket_app_dev/Utils/RouteConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 import 'package:page_transition/page_transition.dart';
 import '../Utils/Globals.dart' as globals;
 
@@ -20,6 +22,16 @@ class RouteGenerator {
       case RouteConstants.authWrapper:
         return PageTransition(
             child: AuthWrapper(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.signUp:
+        return PageTransition(
+            child: SignUpScreen(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.otp:
+        return PageTransition(
+            child: OtpScreenUI(),
             type: PageTransitionType.rightToLeft,
             duration: animationDuration);
       case RouteConstants.bottomBarUi:

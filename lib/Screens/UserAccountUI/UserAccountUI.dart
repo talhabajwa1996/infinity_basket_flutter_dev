@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusService.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
-import 'package:infinity_basket_app_dev/Utils/ImageConstants.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/SignInService.dart';
+import 'package:infinity_basket_app_dev/Services/SharedPreferenceService/SharedPreferencesService.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ImageConstants.dart';
 
 class UserAccountUI extends StatelessWidget {
   @override
@@ -23,7 +25,7 @@ class UserAccountUI extends StatelessWidget {
                     borderRadius: BorderRadius.circular(5.0)),
                 color: ColorConstants.secondaryColor,
                 onPressed: () async {
-                  await AuthService().clearAuthToken(context);
+                  await AuthInLocalDataService().clearLoginData(context);
                 },
                 child: Text(
                   "SIGN OUT",

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Screens/UserAccountUI/UserAccountUI.dart';
-import 'package:infinity_basket_app_dev/Utils/RouteConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 
 class UserAccountNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> userAccountNavigatorKey;

@@ -6,7 +6,7 @@ import 'package:infinity_basket_app_dev/Routes/MarketPlaceNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/MyCartNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/OrdersNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/UserAccountNavigator.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 
 class BottomBarUI extends StatefulWidget {
   @override

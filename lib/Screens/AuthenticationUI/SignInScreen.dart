@@ -7,9 +7,10 @@ import 'package:infinity_basket_app_dev/Components/Widgets/SignIn/SocialLogin.da
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Routes/AppNavigation.dart';
 import 'package:infinity_basket_app_dev/Services/AuthServices/SignInService.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
-import 'package:infinity_basket_app_dev/Utils/RouteConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 import 'package:provider/provider.dart';
+import '../../Utils/Globals.dart' as globals;
 
 class SignInScreenUI extends StatefulWidget {
   @override
@@ -52,21 +53,27 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                     CustomTextFormField(
                       node: phoneNoNode,
                       onFieldSubmit: (value) {
-                        FocusScope.of(context).requestFocus(passwordNode);
+                        FocusScope.of(context).requestFocus(phoneNoNode);
                       },
                       txt: 'Mobile Number',
-                      isObscure: false,
+                      prefixWidget: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: <Widget>[
+                          SizedBox(width: 15.0),
+                          Icon(Icons.phone),
+                          SizedBox(width: 10.0),
+                          Text(globals.countryCode),
+                          SizedBox(width: 10.0),
+                        ],
+                      ),
                       controller: _phoneNoController,
-                      isEnable: true,
                       inputType: TextInputType.number,
                       inputAction: TextInputAction.next,
-                      prefixWidget: Icon(Icons.phone),
-                      validator: (value) =>
-                          (value.isEmpty) ? "Please Enter Mobile Number" : null,
-                      onChange: (value) {
-                        user.setMessage(null);
-                        user.setError(false);
-                      },
+                      validator: (String value) =>
+                          value.isEmpty || value.length != 10
+                              ? "Please enter a valid Phone No"
+                              : null,
                     ),
                     SizedBox(height: size.height * 0.02),
                     Consumer<SignInProvider>(
@@ -85,8 +92,8 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                             suffixWidget: SizedBox(),
                             validator: (String value) => (value.isEmpty)
                                 ? "Please Enter Password"
-                                : user.getError()
-                                    ? user.getMessage()
+                                : value.length < 8
+                                    ? 'Password cannot be less than 8 digits'
                                     : null,
                             onChange: (value) {
                               user.setError(false);
@@ -168,11 +175,15 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                         borderRadius: BorderRadius.circular(5.0)),
                     color: ColorConstants.black,
                     onPressed: () async {
+                      String phoneNo = "${globals.countryCode}${_phoneNoController.text}";
+                      print(phoneNo);
                       if (formKey.currentState.validate()) {
                         FocusScope.of(context).requestFocus(FocusNode());
                         await SignInService()
-                            .loginUser(_phoneNoController.text,
-                                _passwordController.text, context)
+                            .loginUser(
+                                phoneNo,
+                                _passwordController.text,
+                                context)
                             .then((signInResponse) {
                           if (signInResponse.responseData.status == 200) {
                             // AppNavigation()

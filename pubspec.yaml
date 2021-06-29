@@ -34,6 +34,10 @@ dependencies:
   http:
   shared_preferences:
   fluttertoast:
+  flutter_masked_text:
+  email_validator:
+  pin_code_fields:
+  quiver:
 
 dev_dependencies:
   flutter_test:

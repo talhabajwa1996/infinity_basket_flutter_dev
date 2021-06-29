@@ -24,7 +24,7 @@ class SignInService {
       SignInResponseModel _responseModel =
           SignInResponseModel.fromJson(response);
       if (_responseModel.status == 200) {
-        AuthService().setAuthToken(_responseModel.data.accessToken, context);
+        await AuthInLocalDataService().setLoginData(_responseModel, context);
       }
       Provider.of<SignInProvider>(context, listen: false).setLoading(false);
       return ApiResponse.completed(_responseModel);

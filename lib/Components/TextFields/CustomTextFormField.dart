@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 
 class CustomTextFormField extends StatelessWidget {
   final String txt;

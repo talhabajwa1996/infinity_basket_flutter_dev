@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Routes/AppNavigation.dart';
-import 'package:infinity_basket_app_dev/Utils/ColorConstants.dart';
-import 'package:infinity_basket_app_dev/Utils/ImageConstants.dart';
-import 'package:infinity_basket_app_dev/Utils/RouteConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/ImageConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 
 class SplashScreenUI extends StatefulWidget {
   @override
