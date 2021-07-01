@@ -2,7 +2,7 @@
     package="com.infinity_basket.infinity_basket_app_dev">
     <uses-permission android:name="android.permission.INTERNET"/>
    <application
-        android:label="infinity_basket_app_dev"
+        android:label="Infinity Basket"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

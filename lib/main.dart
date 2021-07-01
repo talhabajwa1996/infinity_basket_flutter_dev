@@ -1,12 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:infinity_basket_app_dev/Providers/OtpProvider/OtpProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/CreateNewPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/ForgetPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpPasswordProvider/OtpPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:provider/provider.dart';
 import 'Routes/AppNavigation.dart';
 import 'Routes/Routes.dart';
 import 'Utils/Constants/ColorConstants.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -33,8 +39,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<SignInProvider>(
           create: (context) => SignInProvider(),
         ),
-        ChangeNotifierProvider<OtpProvider>(
-          create: (context) => OtpProvider(),
+        ChangeNotifierProvider<OtpRegisterProvider>(
+          create: (context) => OtpRegisterProvider(),
+        ),
+        ChangeNotifierProvider<ForgotPasswordProvider>(
+          create: (context) => ForgotPasswordProvider(),
+        ),
+        ChangeNotifierProvider<CreatePasswordProvider>(
+          create: (context) => CreatePasswordProvider(),
+        ),
+        ChangeNotifierProvider<OtpPasswordProvider>(
+          create: (context) => OtpPasswordProvider(),
         ),
       ],
       child: MaterialApp(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/AuthWrapper.dart';
-import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/OtpScreen.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/ForgetPasswordUI/CreateNewPasswordUI.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/ForgetPasswordUI/ForgetPasswordUI.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/ForgetPasswordUI/OtpRecoverPasswordScreen.dart';
+import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/OtpRegisterScreen.dart';
 import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/SingUpScreen.dart';
 import 'package:infinity_basket_app_dev/Screens/BottomBarUI/BottomBarUI.dart';
 import 'package:infinity_basket_app_dev/Screens/SplashScreenUI/SplashScreenUI.dart';
@@ -29,14 +32,29 @@ class RouteGenerator {
             child: SignUpScreen(),
             type: PageTransitionType.rightToLeft,
             duration: animationDuration);
-      case RouteConstants.otp:
+      case RouteConstants.otpRegister:
         return PageTransition(
-            child: OtpScreenUI(),
+            child: OtpRegisterScreenUI(signUpData: args),
             type: PageTransitionType.rightToLeft,
             duration: animationDuration);
       case RouteConstants.bottomBarUi:
         return PageTransition(
             child: BottomBarUI(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.forgetPassword:
+        return PageTransition(
+            child: ForgetPasswordUI(),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.otpRecoverPassword:
+        return PageTransition(
+            child: OtpRecoverPasswordScreenUI(phoneNo: args),
+            type: PageTransitionType.rightToLeft,
+            duration: animationDuration);
+      case RouteConstants.createNewPassword:
+        return PageTransition(
+            child: CreateNewPasswordUI(),
             type: PageTransitionType.rightToLeft,
             duration: animationDuration);
       default:

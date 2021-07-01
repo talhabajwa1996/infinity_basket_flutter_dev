@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusService.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusInLocalDataService.dart';
 import 'package:infinity_basket_app_dev/Services/AuthServices/SignInService.dart';
 import 'package:infinity_basket_app_dev/Services/SharedPreferenceService/SharedPreferencesService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';

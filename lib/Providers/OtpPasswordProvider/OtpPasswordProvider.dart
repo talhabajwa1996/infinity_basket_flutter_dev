@@ -1,14 +1,32 @@
-import 'package:flutter/foundation.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:infinity_basket_app_dev/Models/OtpPasswordModel/OtpPasswordResponseModel.dart';
 import 'package:quiver/async.dart';
 
-class OtpProvider with ChangeNotifier {
-  bool loading = false;
+class OtpPasswordProvider extends ChangeNotifier {
   bool hasError = false;
   String errorMessage;
   int start, current;
   bool isVisible = true;
   var sub;
+
+  OtpPasswordResponseModel _otpResponse;
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  setLoading(bool value, {bool notify = true}) {
+    _loading = value;
+    if (notify) {
+      notifyListeners();
+    }
+  }
+
+  OtpPasswordResponseModel get otpResponse => _otpResponse;
+
+  set setOtpResponse(OtpPasswordResponseModel otpResponse) {
+    _otpResponse = otpResponse;
+    notifyListeners();
+  }
 
   void startTimer() {
     sub?.cancel();
@@ -30,15 +48,6 @@ class OtpProvider with ChangeNotifier {
       sub.cancel();
       notifyListeners();
     });
-  }
-
-  void setLoading(value) {
-    loading = value;
-    notifyListeners();
-  }
-
-  bool isLoading() {
-    return loading;
   }
 
   bool isValidated() {

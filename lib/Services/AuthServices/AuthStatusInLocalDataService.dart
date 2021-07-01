@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:infinity_basket_app_dev/Components/SnackBar/showSnackBar.dart';
 import 'package:infinity_basket_app_dev/Models/SignInModel/SignInResponseModel.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Services/SharedPreferenceService/SharedPreferencesService.dart';
@@ -36,7 +37,7 @@ class AuthInLocalDataService {
         .getString(SharedPrefsConstant.accessToken)
         .then((value) {
       print(value);
-      if (value != null) {
+      if (value != null && value.isNotEmpty) {
         Provider.of<SignInProvider>(context, listen: false).setSignInResponse =
             _signInResponseFromSharedPrefs;
       }
@@ -45,32 +46,37 @@ class AuthInLocalDataService {
 
   Future<void> setLoginData(
       SignInResponseModel signInResponseModel, BuildContext context) async {
-    await SharedPreferencesService()
-        .setInt(SharedPrefsConstant.id, signInResponseModel.data.id);
-    await SharedPreferencesService().setString(
-        SharedPrefsConstant.firstName, signInResponseModel.data.firstName);
-    await SharedPreferencesService().setString(
-        SharedPrefsConstant.lastName, signInResponseModel.data.lastName);
-    await SharedPreferencesService()
-        .setString(SharedPrefsConstant.email, signInResponseModel.data.email);
-    await SharedPreferencesService()
-        .setString(SharedPrefsConstant.phone, signInResponseModel.data.phone);
-    await SharedPreferencesService()
-        .setString(SharedPrefsConstant.role, signInResponseModel.data.role);
-    await SharedPreferencesService().setString(
-        SharedPrefsConstant.createdAt, signInResponseModel.data.createdAt);
-    await SharedPreferencesService().setString(
-        SharedPrefsConstant.updatedAt, signInResponseModel.data.updatedAt);
-    await SharedPreferencesService().setString(
-        SharedPrefsConstant.accessToken, signInResponseModel.data.accessToken);
-    await SharedPreferencesService()
-        .setString(SharedPrefsConstant.message, signInResponseModel.message);
-    await SharedPreferencesService()
-        .setInt(SharedPrefsConstant.status, signInResponseModel.status);
-    await SharedPreferencesService().setBool(
-        SharedPrefsConstant.status, signInResponseModel.data.isVerified);
-    Provider.of<SignInProvider>(context, listen: false).setSignInResponse =
-        signInResponseModel;
+    if (signInResponseModel.data != null && signInResponseModel.data.accessToken != null) {
+      await SharedPreferencesService()
+          .setInt(SharedPrefsConstant.id, signInResponseModel.data.id);
+      await SharedPreferencesService().setString(
+          SharedPrefsConstant.firstName, signInResponseModel.data.firstName);
+      await SharedPreferencesService().setString(
+          SharedPrefsConstant.lastName, signInResponseModel.data.lastName);
+      await SharedPreferencesService()
+          .setString(SharedPrefsConstant.email, signInResponseModel.data.email);
+      await SharedPreferencesService()
+          .setString(SharedPrefsConstant.phone, signInResponseModel.data.phone);
+      await SharedPreferencesService()
+          .setString(SharedPrefsConstant.role, signInResponseModel.data.role);
+      await SharedPreferencesService().setString(
+          SharedPrefsConstant.createdAt, signInResponseModel.data.createdAt);
+      await SharedPreferencesService().setString(
+          SharedPrefsConstant.updatedAt, signInResponseModel.data.updatedAt);
+      await SharedPreferencesService().setString(
+          SharedPrefsConstant.accessToken,
+          signInResponseModel.data.accessToken);
+      await SharedPreferencesService()
+          .setString(SharedPrefsConstant.message, signInResponseModel.message);
+      await SharedPreferencesService()
+          .setInt(SharedPrefsConstant.status, signInResponseModel.status);
+      await SharedPreferencesService().setBool(
+          SharedPrefsConstant.status, signInResponseModel.data.isVerified);
+      Provider.of<SignInProvider>(context, listen: false).setSignInResponse =
+          signInResponseModel;
+    }else{
+      showSnackBar("Unable to Login", context);
+    }
   }
 
   Future<void> clearLoginData(BuildContext context) async {

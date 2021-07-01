@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
+import 'package:infinity_basket_app_dev/Services/FirebaseServices/FirebaseAuthService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 import 'package:provider/provider.dart';
 
@@ -13,7 +14,6 @@ class SocialLoginIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<SignInProvider>(context);
     return Column(
       children: [
         Row(
@@ -45,42 +45,14 @@ class SocialLoginIcons extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: height * 0.02,
+          height: height * 0.05,
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // GestureDetector(
-            //   onTap: () {
-            //     user.signInFaceBook(context);
-            //   },
-            //   child: Container(
-            //     width: 40,
-            //     height: 40,
-            //     decoration: BoxDecoration(
-            //       gradient: LinearGradient(
-            //         colors: [
-            //           Color(0xff1346b4),
-            //           Color(0xff0cb2eb),
-            //         ],
-            //       ),
-            //       shape: BoxShape.circle,
-            //     ),
-            //     child: Center(
-            //       child: Icon(
-            //         FontAwesomeIcons.facebookF,
-            //         color: Colors.white,
-            //         size: 20,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            // SizedBox(
-            //   width: 10,
-            // ),
             GestureDetector(
-              onTap: () {
-                // user.signInGoogle(context);
+              onTap: () async {
+                await FirebaseAuthService().signInWithGoogle(context);
               },
               child: Container(
                 width: 40,
@@ -98,28 +70,6 @@ class SocialLoginIcons extends StatelessWidget {
                 ),
               ),
             ),
-            // SizedBox(
-            //   width: 10,
-            // ),
-            // Platform.isIOS?GestureDetector(
-            //   onTap: () {
-            //   },
-            //   child: Container(
-            //     width: 40,
-            //     height: 40,
-            //     decoration: BoxDecoration(
-            //       color: Colors.black,
-            //       shape: BoxShape.circle,
-            //     ),
-            //     child: Center(
-            //       child: Icon(
-            //         FontAwesomeIcons.apple,
-            //         color: Colors.white,
-            //         size: 25,
-            //       ),
-            //     ),
-            //   ),
-            // ):Container(),
           ],
         ),
         SizedBox(

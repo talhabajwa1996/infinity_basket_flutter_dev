@@ -3,7 +3,7 @@ import 'package:infinity_basket_app_dev/Components/ProgressIndicators/GifLoader.
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Screens/AuthenticationUI/SignInScreen.dart';
 import 'package:infinity_basket_app_dev/Screens/BottomBarUI/BottomBarUI.dart';
-import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusService.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/AuthStatusInLocalDataService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 import 'package:provider/provider.dart';
 

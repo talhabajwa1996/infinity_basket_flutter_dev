@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "778479237664",
+    "project_id": "infinity-basket-311323",
+    "storage_bucket": "infinity-basket-311323.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778479237664:android:67ba757191aadd91b91a45",
+        "android_client_info": {
+          "package_name": "com.infinity_basket.infinity_basket_app_dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "778479237664-4sd66ciu1i5pekqg0btcjhf2ckjphbj9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.infinity_basket.infinity_basket_app_dev",
+            "certificate_hash": "bbed92e2f756722a9f5fe762ba81fe4851ce003b"
+          }
+        },
+        {
+          "client_id": "778479237664-4okbbnduvoch27gprtqbag6u48adh80f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNRqjYNPI6zMpDwtwf9MV3yuMrAaFwsfo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778479237664-4okbbnduvoch27gprtqbag6u48adh80f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,22 +1,33 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Components/ProgressIndicators/GifLoader.dart';
+import 'package:infinity_basket_app_dev/Components/SnackBar/showSnackBar.dart';
 import 'package:infinity_basket_app_dev/Components/Widgets/AppImageLogo/AppImageLogo.dart';
-import 'package:infinity_basket_app_dev/Providers/OtpProvider/OtpProvider.dart';
+import 'package:infinity_basket_app_dev/Models/OtpPasswordModel/OtpPasswordResponseModel.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpPasswordProvider/OtpPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Routes/AppNavigation.dart';
+import 'package:infinity_basket_app_dev/Services/API/api_response.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/OtpPasswordService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
+import '../../../Utils/Globals.dart' as globals;
 
-class OtpScreenUI extends StatefulWidget {
-  // final Map<String, String> routeArgs;
-  // OtpScreenUI(this.routeArgs);
+class OtpRecoverPasswordScreenUI extends StatefulWidget {
+  final String phoneNo;
+
+  OtpRecoverPasswordScreenUI({this.phoneNo});
 
   @override
-  _OtpScreenUIState createState() => _OtpScreenUIState();
+  _OtpRecoverPasswordScreenUIState createState() =>
+      _OtpRecoverPasswordScreenUIState();
 }
 
-class _OtpScreenUIState extends State<OtpScreenUI> {
+class _OtpRecoverPasswordScreenUIState
+    extends State<OtpRecoverPasswordScreenUI> {
   TextEditingController _otpController = new TextEditingController();
   StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
@@ -25,7 +36,7 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
 
   @override
   void initState() {
-    Provider.of<OtpProvider>(context, listen: false).startTimer();
+    Provider.of<OtpRegisterProvider>(context, listen: false).startTimer();
     super.initState();
   }
 
@@ -41,7 +52,8 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
     return Scaffold(
         backgroundColor: ColorConstants.secondaryColor,
         body: SingleChildScrollView(
-          child: Consumer<OtpProvider>(builder: (context, otpData, child) {
+          child:
+              Consumer<OtpPasswordProvider>(builder: (context, otpData, child) {
             return Container(
                 padding: EdgeInsets.symmetric(horizontal: size.width * 0.08),
                 child: Center(
@@ -70,7 +82,7 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            "03314978350",
+                            widget.phoneNo,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: ColorConstants.primaryColor,
@@ -81,7 +93,8 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
                               type: MaterialType.transparency,
                               child: Ink(
                                 decoration: BoxDecoration(
-                                  color: ColorConstants.primaryColor.withOpacity(0.7),
+                                  color: ColorConstants.primaryColor
+                                      .withOpacity(0.7),
                                   shape: BoxShape.circle,
                                 ),
                                 child: InkWell(
@@ -104,40 +117,46 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
                       Form(
                         child: Column(
                           children: <Widget>[
-                            PinCodeTextField(
-                              length: 4,
-                              obscureText: false,
-                              controller: _otpController,
-                              backgroundColor: Colors.grey.withOpacity(0.0),
-                              pinTheme: PinTheme(
-                                  shape: PinCodeFieldShape.box,
-                                  inactiveColor: ColorConstants.white,
-                                  activeFillColor: ColorConstants.white,
-                                  inactiveFillColor: ColorConstants.white,
-                                  selectedFillColor: ColorConstants.white,
-                                  disabledColor: ColorConstants.white,
-                                  selectedColor: ColorConstants.white,
-                                  activeColor: ColorConstants.white,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  fieldWidth: 60,
-                                  fieldHeight: 60),
-                              onCompleted: (value) {
-                                ///register service here
-                              },
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              textStyle: TextStyle(
-                                  color: ColorConstants.primaryColor,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0),
-                              animationType: AnimationType.fade,
-                              keyboardType: TextInputType.number,
-                              animationDuration: Duration(milliseconds: 300),
-                              enableActiveFill: true,
-                              onChanged: (value) {
-                                otpData.setError(false);
-                              },
-                              appContext: context,
-                            ),
+                            Consumer<OtpRegisterProvider>(
+                                builder: (context, otpProvider, child) {
+                              return PinCodeTextField(
+                                length: 6,
+                                obscureText: false,
+                                controller: _otpController,
+                                backgroundColor: Colors.grey.withOpacity(0.0),
+                                pinTheme: PinTheme(
+                                    fieldOuterPadding: EdgeInsets.all(0),
+                                    shape: PinCodeFieldShape.box,
+                                    inactiveColor: ColorConstants.white,
+                                    activeFillColor: ColorConstants.white,
+                                    inactiveFillColor: ColorConstants.white,
+                                    selectedFillColor: ColorConstants.white,
+                                    disabledColor: ColorConstants.white,
+                                    selectedColor: ColorConstants.white,
+                                    activeColor: ColorConstants.white,
+                                    borderRadius: BorderRadius.circular(5.0),
+                                    fieldWidth: 50,
+                                    fieldHeight: 65),
+                                onCompleted: (value) async {
+                                  Navigator.pushReplacementNamed(context,
+                                      RouteConstants.createNewPassword);
+                                },
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                textStyle: TextStyle(
+                                    color: ColorConstants.primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20.0),
+                                animationType: AnimationType.fade,
+                                keyboardType: TextInputType.number,
+                                animationDuration: Duration(milliseconds: 300),
+                                enableActiveFill: true,
+                                onChanged: (value) {
+                                  otpData.setError(false);
+                                },
+                                appContext: context,
+                              );
+                            }),
                             otpData.getError()
                                 ? Text(
                                     otpData.getMessage(),
@@ -149,9 +168,27 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
                             SizedBox(height: size.height * 0.01),
                             otpData.isVisible
                                 ? FlatButton(
-                                    onPressed: () {},
+                                    onPressed: () async {
+                                      ApiResponse<OtpPasswordResponseModel>
+                                          otpResponse =
+                                          await OtpPasswordService()
+                                              .getPasswordRecoveryOtp(
+                                                  widget.phoneNo, context);
+                                      if (otpResponse.status ==
+                                              Status.COMPLETED &&
+                                          otpResponse.responseData.status ==
+                                              200) {
+                                        showSnackBar(
+                                            otpResponse.responseData.message,
+                                            context);
+                                      } else {
+                                        showSnackBar(
+                                            otpResponse.responseData.message,
+                                            context);
+                                      }
+                                    },
                                     child: Text(
-                                      "Don't receive code. RESEND",
+                                      "Didn't receive code. RESEND",
                                       style: TextStyle(
                                           fontSize: 14.0,
                                           letterSpacing: 0.5,
@@ -171,7 +208,7 @@ class _OtpScreenUIState extends State<OtpScreenUI> {
                       SizedBox(
                         height: 12.0,
                       ),
-                      otpData.isLoading() ? GifLoader() : Container(),
+                      otpData.loading ? GifLoader() : Container(),
                     ],
                   ),
                 ));

@@ -3,11 +3,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
+import 'package:infinity_basket_app_dev/Components/ProgressIndicators/GifLoader.dart';
+import 'package:infinity_basket_app_dev/Components/SnackBar/showSnackBar.dart';
 import 'package:infinity_basket_app_dev/Components/TextFields/CustomTextFormField.dart';
 import 'package:infinity_basket_app_dev/Components/Widgets/AppImageLogo/AppImageLogo.dart';
-import 'package:infinity_basket_app_dev/Routes/AppNavigation.dart';
+import 'package:infinity_basket_app_dev/Models/OtpRegisterModel/OtpResponseModel.dart';
+import 'package:infinity_basket_app_dev/Models/SignUpModel/SignUpRequestModel.dart';
+import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
+import 'package:infinity_basket_app_dev/Services/API/api_response.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/OtpRegisterService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
+import 'package:provider/provider.dart';
 import '../../Utils/Globals.dart' as globals;
 
 class SignUpScreen extends StatefulWidget {
@@ -34,6 +42,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController _passwordController = new TextEditingController();
   TextEditingController _confirmPasswordController =
       new TextEditingController();
+
+  @override
+  void initState() {
+    Provider.of<OtpRegisterProvider>(context, listen: false)
+        .setLoading(false, notify: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -180,9 +195,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                     color: Colors.white,
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState.validate()) {
-                        Navigator.of(context).pushNamed(RouteConstants.otp);
+                        ApiResponse<OtpRegisterResponseModel> otpResponse =
+                            await OtpRegisterService().getRegisterOtp(
+                                _emailController.text,
+                                "${globals.countryCode}${_contactNoController.text}",
+                                context);
+                        if (otpResponse.status == Status.COMPLETED &&
+                            otpResponse.responseData.status == 200) {
+                          SignUpRequestModel signUpRequestData = SignUpRequestModel(
+                              user: User(
+                                  email: _emailController.text,
+                                  phone:
+                                      "${globals.countryCode}${_contactNoController.text}",
+                                  lastName: _lastNameController.text,
+                                  firstName: _firstNameController.text,
+                                  password: _passwordController.text));
+                          Navigator.pushNamed(
+                              context, RouteConstants.otpRegister,
+                              arguments: signUpRequestData);
+                        } else {
+                          showSnackBar(
+                              otpResponse.responseData.message, context);
+                        }
                       }
                     },
                     child: Text(
@@ -194,7 +230,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                Consumer<OtpRegisterProvider>(
+                    builder: (context, otpProvider, child) {
+                  return Expanded(
+                      child: otpProvider.loading
+                          ? Center(child: GifLoader())
+                          : SizedBox());
+                }),
               ],
             ),
           ),

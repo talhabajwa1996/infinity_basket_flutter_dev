@@ -129,7 +129,8 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                     ),
                     FlatButton(
                       onPressed: () {
-                        AppNavigation().navigateTo('/forget-password');
+                        AppNavigation()
+                            .navigateTo(RouteConstants.forgetPassword);
                       },
                       child: Text(
                         "Forgot Password",
@@ -175,19 +176,16 @@ class _SignInScreenUIState extends State<SignInScreenUI> {
                         borderRadius: BorderRadius.circular(5.0)),
                     color: ColorConstants.black,
                     onPressed: () async {
-                      String phoneNo = "${globals.countryCode}${_phoneNoController.text}";
+                      String phoneNo =
+                          "${globals.countryCode}${_phoneNoController.text}";
                       print(phoneNo);
                       if (formKey.currentState.validate()) {
                         FocusScope.of(context).requestFocus(FocusNode());
                         await SignInService()
                             .loginUser(
-                                phoneNo,
-                                _passwordController.text,
-                                context)
+                                phoneNo, _passwordController.text, context)
                             .then((signInResponse) {
                           if (signInResponse.responseData.status == 200) {
-                            // AppNavigation()
-                            //     .pushReplacementTo(RouteConstants.bottomBarUi);
                           } else {
                             showSnackBar(
                                 signInResponse.responseData.message, context);

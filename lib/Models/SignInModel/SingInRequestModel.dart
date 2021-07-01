@@ -1,10 +1,10 @@
 class SignInRequestModel {
-  User user;
+  UserModel user;
 
   SignInRequestModel({this.user});
 
   SignInRequestModel.fromJson(Map<String, dynamic> json) {
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    user = json['user'] != null ? new UserModel.fromJson(json['user']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -16,13 +16,13 @@ class SignInRequestModel {
   }
 }
 
-class User {
+class UserModel {
   String phone;
   String password;
 
-  User({this.phone, this.password});
+  UserModel({this.phone, this.password});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json) {
     phone = json['phone'];
     password = json['password'];
   }
