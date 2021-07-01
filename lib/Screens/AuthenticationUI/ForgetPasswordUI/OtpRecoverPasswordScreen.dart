@@ -6,7 +6,6 @@ import 'package:infinity_basket_app_dev/Components/Widgets/AppImageLogo/AppImage
 import 'package:infinity_basket_app_dev/Models/OtpPasswordModel/OtpPasswordResponseModel.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpPasswordProvider/OtpPasswordProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
-import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:infinity_basket_app_dev/Routes/AppNavigation.dart';
 import 'package:infinity_basket_app_dev/Services/API/api_response.dart';
 import 'package:infinity_basket_app_dev/Services/AuthServices/OtpPasswordService.dart';
@@ -14,7 +13,6 @@ import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-import '../../../Utils/Globals.dart' as globals;
 
 class OtpRecoverPasswordScreenUI extends StatefulWidget {
   final String phoneNo;
@@ -117,7 +115,7 @@ class _OtpRecoverPasswordScreenUIState
                       Form(
                         child: Column(
                           children: <Widget>[
-                            Consumer<OtpRegisterProvider>(
+                            Consumer<OtpPasswordProvider>(
                                 builder: (context, otpProvider, child) {
                               return PinCodeTextField(
                                 length: 6,
@@ -138,8 +136,16 @@ class _OtpRecoverPasswordScreenUIState
                                     fieldWidth: 50,
                                     fieldHeight: 65),
                                 onCompleted: (value) async {
-                                  Navigator.pushReplacementNamed(context,
-                                      RouteConstants.createNewPassword);
+                                  if (otpProvider.otpResponse != null &&
+                                      otpProvider.otpResponse.data != null &&
+                                      int.parse(_otpController.text) ==
+                                          otpProvider.otpResponse.data.otp) {
+                                    Navigator.pushReplacementNamed(context,
+                                        RouteConstants.createNewPassword,
+                                        arguments: widget.phoneNo);
+                                  } else {
+                                    showSnackBar('Otp not Matched', context);
+                                  }
                                 },
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,

@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Components/ProgressIndicators/GifLoader.dart';
+import 'package:infinity_basket_app_dev/Components/SnackBar/showSnackBar.dart';
 import 'package:infinity_basket_app_dev/Components/TextFields/CustomTextFormField.dart';
+import 'package:infinity_basket_app_dev/Components/Toast/ShowToast.dart';
 import 'package:infinity_basket_app_dev/Components/Widgets/AppImageLogo/AppImageLogo.dart';
+import 'package:infinity_basket_app_dev/Models/NewPasswordModel/NewPasswordResponseModel.dart';
 import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/CreateNewPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Services/API/api_response.dart';
+import 'package:infinity_basket_app_dev/Services/AuthServices/RecoverPasswordService.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 import 'package:provider/provider.dart';
 
 class CreateNewPasswordUI extends StatefulWidget {
+  final String phoneNo;
+
+  CreateNewPasswordUI({this.phoneNo});
+
   @override
   _CreateNewPasswordUIState createState() => _CreateNewPasswordUIState();
 }
@@ -51,7 +61,7 @@ class _CreateNewPasswordUIState extends State<CreateNewPasswordUI> {
                     child: Column(
                       children: <Widget>[
                         CustomTextFormField(
-                          txt: "+923338332821",
+                          txt: widget.phoneNo,
                           readOnly: true,
                           isObscure: false,
                           isEnable: false,
@@ -110,8 +120,29 @@ class _CreateNewPasswordUIState extends State<CreateNewPasswordUI> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5.0)),
                                   color: ColorConstants.white,
-                                  onPressed: () {
+                                  onPressed: () async {
                                     if (formKey.currentState.validate()) {
+                                      ApiResponse<NewPasswordResponseModel>
+                                          _newPasswordResponse =
+                                          await RecoverPasswordService()
+                                              .setNewPassword(
+                                                  widget.phoneNo,
+                                                  passwordController.text,
+                                                  context);
+                                      if (_newPasswordResponse
+                                              .responseData.status ==
+                                          200) {
+                                        Navigator.pushNamedAndRemoveUntil(
+                                            context,
+                                            RouteConstants.authWrapper,
+                                            (route) => false);
+                                        showToast('Password Recovered');
+                                      } else {
+                                        showSnackBar(
+                                            _newPasswordResponse
+                                                .responseData.message,
+                                            context);
+                                      }
                                     } else {
                                       createPasswordProvider
                                           .setIsValidated(true);

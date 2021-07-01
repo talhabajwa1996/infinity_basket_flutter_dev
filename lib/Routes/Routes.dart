@@ -54,7 +54,7 @@ class RouteGenerator {
             duration: animationDuration);
       case RouteConstants.createNewPassword:
         return PageTransition(
-            child: CreateNewPasswordUI(),
+            child: CreateNewPasswordUI(phoneNo: args),
             type: PageTransitionType.rightToLeft,
             duration: animationDuration);
       default:

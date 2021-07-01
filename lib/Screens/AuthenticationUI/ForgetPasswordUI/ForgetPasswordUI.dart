@@ -116,14 +116,16 @@ class _ForgetPasswordUIState extends State<ForgetPasswordUI> {
                                           otpResponse =
                                           await OtpPasswordService()
                                               .getPasswordRecoveryOtp(
-                                                  "${globals.countryCode}${_mobileNumber.text}", context);
+                                                  "${globals.countryCode}${_mobileNumber.text}",
+                                                  context);
                                       if (otpResponse.status ==
                                               Status.COMPLETED &&
                                           otpResponse.responseData.status ==
                                               200) {
                                         Navigator.pushNamed(context,
                                             RouteConstants.otpRecoverPassword,
-                                            arguments: _mobileNumber.text);
+                                            arguments:
+                                                "${globals.countryCode}${_mobileNumber.text}");
                                       } else {
                                         showSnackBar(
                                             otpResponse.responseData.message,
