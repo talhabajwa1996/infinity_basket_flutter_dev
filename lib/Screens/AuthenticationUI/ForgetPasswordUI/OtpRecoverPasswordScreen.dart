@@ -133,7 +133,7 @@ class _OtpRecoverPasswordScreenUIState
                                     selectedColor: ColorConstants.white,
                                     activeColor: ColorConstants.white,
                                     borderRadius: BorderRadius.circular(5.0),
-                                    fieldWidth: 50,
+                                    fieldWidth: 40,
                                     fieldHeight: 65),
                                 onCompleted: (value) async {
                                   if (otpProvider.otpResponse != null &&
