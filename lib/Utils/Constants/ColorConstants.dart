@@ -11,4 +11,7 @@ class ColorConstants {
 
   //splashUI Colors
   static Color splashScreenGetStartedButtonColor = Color(0xffF4C90F);
+
+  //marketPlaceUI Colors
+  static const Color tilesText = Color.fromRGBO(100, 100, 100, 1);
 }

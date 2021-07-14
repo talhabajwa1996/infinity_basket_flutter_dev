@@ -42,6 +42,8 @@ dependencies:
   google_sign_in:
   firebase_core:
   flutter_launcher_icons:
+  flutter_staggered_grid_view:
+  cached_network_image:
 
 dev_dependencies:
   flutter_test:

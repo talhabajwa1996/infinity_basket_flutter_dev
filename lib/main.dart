@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/CreateNewPasswordProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/ForgetPasswordProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/MarketPlaceProvider/MarketPlaceProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpPasswordProvider/OtpPasswordProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
@@ -50,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<OtpPasswordProvider>(
           create: (context) => OtpPasswordProvider(),
+        ),
+        ChangeNotifierProvider<MarketPlaceProvider>(
+          create: (context) => MarketPlaceProvider(),
         ),
       ],
       child: MaterialApp(

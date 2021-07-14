@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:infinity_basket_app_dev/Screens/MarketPlaceScreenUI/MArketPlaceScreenUI.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ImageConstants.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 
@@ -19,7 +20,7 @@ class MarketPlaceNavigator extends StatelessWidget {
               switch (settings.name) {
                 case RouteConstants.initialRouteName:
                   return Container(
-                    child: Center(child: Image.asset(ImageConstants.devIcon, height: 150)),
+                    child: Center(child: MarketPlaceScreenUI()),
                   );
                 default:
                   return _errorRoute();

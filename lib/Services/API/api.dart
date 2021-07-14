@@ -24,6 +24,26 @@ class Api {
     return responseJson;
   }
 
+  static Future<dynamic> getRequestData(String url) async {
+    String apiUrl = global.API_URL + url;
+    print(url);
+    var responseJson;
+    try {
+      final response = await http.get(
+        Uri.parse(apiUrl),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      );
+      print(response.body);
+      responseJson = _returnListResponse(response);
+      return responseJson;
+    } on SocketException {
+      print('Socket Exception');
+      throw FetchDataException("No Internet Available");
+    }
+  }
+
   static Future<dynamic> postRequestData(String url, dynamic body) async {
     String apiUrl = global.API_URL + url;
     print(url);
