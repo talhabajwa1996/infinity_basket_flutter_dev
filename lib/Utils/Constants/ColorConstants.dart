@@ -8,6 +8,10 @@ class ColorConstants {
   static const Color black = Colors.black;
   static const Color gray = Color.fromRGBO(190, 191, 192, 1);
   static const Color red = Color.fromRGBO(255, 82, 82, 1);
+  static const Color orange = Color.fromRGBO(237, 115, 84, 1);
+
+  //global colors
+  static Color searchBarHintTextColor = Color.fromRGBO(13, 75, 20, 1.0);
 
   //splashUI Colors
   static Color splashScreenGetStartedButtonColor = Color(0xffF4C90F);

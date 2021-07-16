@@ -35,7 +35,7 @@ class _MarketPlaceScreenUIState extends State<MarketPlaceScreenUI>
     super.build(context);
     return Scaffold(
       backgroundColor: ColorConstants.white,
-      appBar: appHeaderTabs(context),
+      appBar: appHeader(context),
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         child: StreamBuilder<ApiResponse<MarketPlaceResponseModel>>(

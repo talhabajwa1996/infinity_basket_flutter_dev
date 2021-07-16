@@ -1,9 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:infinity_basket_app_dev/Components/Toast/ShowToast.dart';
 import 'package:infinity_basket_app_dev/Routes/MarketPlaceNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/MyCartNavigator.dart';
+import 'package:infinity_basket_app_dev/Routes/NotificationsNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/OrdersNavigator.dart';
 import 'package:infinity_basket_app_dev/Routes/UserAccountNavigator.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
@@ -27,7 +29,7 @@ class _BottomBarUIState extends State<BottomBarUI>
 
   @override
   void initState() {
-    controller = new TabController(vsync: this, length: 4, initialIndex: 2);
+    controller = new TabController(vsync: this, length: 5, initialIndex: 2);
     super.initState();
   }
 
@@ -70,6 +72,7 @@ class _BottomBarUIState extends State<BottomBarUI>
             MyCartNavigator(_navigatorKeys[0]),
             OrdersNavigator(_navigatorKeys[1]),
             MarketPlaceNavigator(_navigatorKeys[2]),
+            NotificationsNavigator(_navigatorKeys[3]),
             UserAccountNavigator(_navigatorKeys[4]),
           ],
         ),
@@ -104,8 +107,9 @@ class _BottomBarUIState extends State<BottomBarUI>
               tabs: [
                 buildTab('cart.png', "Wallet", 1),
                 buildTab('view_order_icon.png', 'Orders', 2),
-                buildTab('market_place.png', 'Marketplace', 3),
-                buildTab('account.png', 'Account', 4),
+                buildTab('', 'Home', 3, icon: Icons.home_outlined, iconSize: 33),
+                buildTab('', 'Notifications', 4, icon: FontAwesomeIcons.bell),
+                buildTab('account.png', 'Account', 5),
               ],
               labelPadding: EdgeInsets.all(0.0),
               indicatorPadding: EdgeInsets.symmetric(horizontal: 15.0),
@@ -123,39 +127,21 @@ class _BottomBarUIState extends State<BottomBarUI>
     );
   }
 
-  Container buildTab(String imgPath, String label, int index) {
+  Container buildTab(String imgPath, String label, int index, {IconData icon, double iconSize}) {
     return Container(
       height: 60,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // index == 1
-          //     ? Consumer<AddToCartProvider>(
-          //         builder: (_, cart, child) => Badge(
-          //           badgeContent: Text(
-          //             cart.totalCarts.toString(),
-          //             style: TextStyle(color: ColorConstants.primaryColor),
-          //           ),
-          //           child: Image.asset(
-          //             'assets/images/' + imgPath,
-          //             height: 28,
-          //             width: 28,
-          //             color: ColorConstants.primaryColor,
-          //           ),
-          //           animationType: BadgeAnimationType.scale,
-          //           badgeColor:
-          //               ColorConstants.appBarNotificationCircleYellowColor,
-          //           showBadge: cart.totalCarts == 0 ? false : true,
-          //         ),
-          //       )
-          //     :
-          Image.asset(
-            'assets/images/' + imgPath,
-            width: 25,
-            height: 25,
-            color: ColorConstants.primaryColor,
-          ),
-          Text(label),
+          icon != null
+              ? Icon(icon, size: iconSize ?? 25)
+              : Image.asset(
+                  'assets/images/' + imgPath,
+                  width: 25,
+                  height: 25,
+                  color: ColorConstants.primaryColor,
+                ),
+          // Text(label),
         ],
       ),
     );

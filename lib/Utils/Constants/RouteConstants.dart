@@ -9,4 +9,5 @@ class RouteConstants {
   static const otpRecoverPassword = '/otp-recover-password';
   static const createNewPassword = '/create-password';
   static const bottomBarUi = '/bottom-bar-ui';
+  static const shopLandingUI = '/shop-landing-ui';
 }

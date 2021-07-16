@@ -1,8 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:infinity_basket_app_dev/Components/CustomImages/NetworkImage.dart';
+import 'package:infinity_basket_app_dev/Components/CustomTexts/ShadowText.dart';
 import 'package:infinity_basket_app_dev/Models/MarketPlaceModel/MarketPlaceResponseModel.dart';
 import 'package:infinity_basket_app_dev/Utils/Constants/ColorConstants.dart';
+import 'package:infinity_basket_app_dev/Utils/Constants/RouteConstants.dart';
 
 class MarketPlaceCategories extends StatelessWidget {
   final List<MarketPlaceData> tilesData;
@@ -28,7 +31,7 @@ class MarketPlaceCategories extends StatelessWidget {
                         : 1.8);
       },
       itemBuilder: (context, index) => CategoryTile(tilesData[index].img,
-          tilesData[index].title, tilesData[0].id.toString()),
+          tilesData[index].title, tilesData[index].id.toString()),
       padding:
           const EdgeInsets.only(top: 2.0, left: 2.0, right: 2.0, bottom: 20),
     );
@@ -44,40 +47,37 @@ class CategoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
+    return Card(
+      elevation: 4.0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(4.0),
       ),
-      child: InkWell(
-        onTap: () {},
-        child: Card(
-            elevation: 4.0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4.0),
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4.0),
+            child: InkWell(
+              onTap: () => Navigator.of(context)
+                  .pushNamed(RouteConstants.shopLandingUI, arguments: marketPlaceId),
+              child: Center(
+                child: appNetworkImage(
+                    imgUrl, double.infinity, double.infinity, BoxFit.cover),
+              ),
             ),
-            child: Stack(
-              children: [
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(4.0),
-                    child: Center(
-                      child: appNetworkImage(imgUrl, double.infinity,
-                          double.infinity, BoxFit.cover),
-                    )),
-                Positioned(
-                    child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                        fontSize: 17, color: ColorConstants.tilesText),
-                    strutStyle: StrutStyle(
-                      forceStrutHeight: true,
-                    ),
-                  ),
-                )),
-              ],
-            )),
+          ),
+          Positioned(
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: ShadowText(
+                title,
+                style: TextStyle(
+                    fontSize: 20,
+                    color: ColorConstants.tilesText,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

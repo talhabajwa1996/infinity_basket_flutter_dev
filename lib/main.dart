@@ -5,6 +5,7 @@ import 'package:infinity_basket_app_dev/Providers/ForgetPassowrdProvider/ForgetP
 import 'package:infinity_basket_app_dev/Providers/MarketPlaceProvider/MarketPlaceProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpPasswordProvider/OtpPasswordProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/OtpRegisterProvider/OtpRegisterProvider.dart';
+import 'package:infinity_basket_app_dev/Providers/ShopLandingProviders/ProductCategoriesProvider/ProductCategoriesProvider.dart';
 import 'package:infinity_basket_app_dev/Providers/SignInProvider/SignInProvider.dart';
 import 'package:provider/provider.dart';
 import 'Routes/AppNavigation.dart';
@@ -54,6 +55,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<MarketPlaceProvider>(
           create: (context) => MarketPlaceProvider(),
+        ),
+        ChangeNotifierProvider<ProductCategoriesProvider>(
+          create: (context) => ProductCategoriesProvider(),
         ),
       ],
       child: MaterialApp(
